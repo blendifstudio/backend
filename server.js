@@ -35,7 +35,7 @@ const app = express();
 // ── CORS configuration ────────────────────────────────────────────────────────
 const allowedOrigins = process.env.CORS_ORIGINS
   ? process.env.CORS_ORIGINS.split(",").map(o => o.trim())
-  : ["http://localhost:5173", "http://localhost:5174"];
+  : ["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173", "http://127.0.0.1:5174", "http://localhost:5175"];
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -55,8 +55,9 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 db.once("open", () => console.log("✅ Connected to MongoDB"));
 
-// Session configuration
+// Session configuration — cookie name is port-specific so two instances don't clash
 app.use(session({
+  name: `sid_${process.env.PORT || 3001}`,
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,

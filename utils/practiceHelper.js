@@ -178,7 +178,7 @@ export async function generatePersonalizedPractice(userId, count = 10) {
       game.timeline.forEach(entry => {
         const topic = entry.topic;
         if (topicData[topic]) {
-          topicData[topic].correct += 1;
+          topicData[topic].correct += entry.correct !== false ? 1 : 0;
           topicData[topic].totalTime += entry.timeslot || 0;
         }
       });

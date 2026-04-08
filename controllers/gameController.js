@@ -32,9 +32,7 @@ export const getGameHistory = async (req, res) => {
 export const getLeaderboard = async (req, res) => {
   try {
     const games = await Game.find()
-      .populate("userId", "username")
-      .sort({ score: -1 })
-      .limit(50);
+      .populate("userId", "username");
 
     // Group by user and get their best scores for each difficulty
     const userBestScores = {};

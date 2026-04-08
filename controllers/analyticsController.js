@@ -43,7 +43,7 @@ export const getTopicAnalytics = async (req, res) => {
       game.timeline.forEach(entry => {
         const topic = entry.topic;
         if (topicStats[topic]) {
-          topicStats[topic].correct += 1;
+          topicStats[topic].correct += entry.correct !== false ? 1 : 0;
           topicStats[topic].totalTime += entry.timeslot || 0;
           topicStats[topic].count += 1;
         }
